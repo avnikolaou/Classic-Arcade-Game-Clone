@@ -24,6 +24,10 @@ let Player = function(x, y, u) {
     this.sprite = 'images/char-cat-girl.png';
 };
 
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 Player.prototype.update = function() {
     // Lock player inside the canvas
     if (this.y > 380) {
@@ -62,12 +66,7 @@ Player.prototype.handleInput = function(keyPress) {
     }
 };
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 let allEnemies = [];
-
 let enemyPosition = [60, 140, 220];
 let player = new Player(200, 380, 50);
 let enemy;
@@ -76,8 +75,6 @@ enemyPosition.forEach(function(y) {
     enemy = new Enemy(0, y, 100 + Math.floor(Math.random() * 512));
     allEnemies.push(enemy);
 });
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
