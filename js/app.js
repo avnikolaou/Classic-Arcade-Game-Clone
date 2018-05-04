@@ -3,13 +3,12 @@ let Enemy = function(x, y, u) {
     this.x = x;
     this.y = y;
     this.u = u;
-
     this.sprite = 'images/enemy-bug.png';
 };
 
 
 Enemy.prototype.update = function(dt) {
-    this.sprite += this.u * dt;
+    this.x += this.u * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -21,12 +20,9 @@ let Player = function(x, y, u) {
     this.x = x;
     this.y = y;
     this.u = u;
-    this.sprite = 'images/char-cat-girl.png';
+    this.sprite = 'images/char-boy.png';
 };
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 Player.prototype.update = function() {
     // Lock player inside the canvas
@@ -47,6 +43,10 @@ Player.prototype.update = function() {
         this.x = 200;
         this.y = 380;
     }
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.handleInput = function(keyPress) {
@@ -71,8 +71,8 @@ let enemyPosition = [60, 140, 220];
 let player = new Player(200, 380, 50);
 let enemy;
 
-enemyPosition.forEach(function(y) {
-    enemy = new Enemy(0, y, 100 + Math.floor(Math.random() * 512));
+enemyPosition.forEach(function(pos) {
+    enemy = new Enemy(0, pos, 100 + Math.floor(Math.random() * 512));
     allEnemies.push(enemy);
 });
 
