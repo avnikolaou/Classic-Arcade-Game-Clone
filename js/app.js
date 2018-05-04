@@ -17,9 +17,56 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+let Player = function(x, y, u) {
+    this.x = x;
+    this.y = y;
+    this.u = u;
+    this.sprite = 'images/char-cat-girl.png';
+};
+
+Player.prototype.update = function() {
+    // Lock player inside the canvas
+    if (this.y > 380) {
+        this.y = 380;
+    }
+
+    if (this.x > 400) {
+        this.x = 400;
+    }
+
+    if (this.x < 0) {
+        this.x = 0;
+    }
+
+    // Check if the player reached the end
+    if (this.y < 0) {
+        this.x = 200;
+        this.y = 380;
+    }
+};
+
+Player.prototype.handleInput = function(keyPress) {
+    switch (keyPress) {
+        case 'left':
+            this.x -= this.u + 30;
+            break;
+        case 'up':
+            this.y -= this.u + 30;
+            break;
+        case 'right':
+            this.x += this.u + 30;
+            break;
+        case 'down':
+            this.y += this.u + 30;
+            break;
+    }
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+
 
 
 // Now instantiate your objects.
