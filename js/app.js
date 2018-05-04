@@ -9,6 +9,17 @@ let Enemy = function(x, y, u) {
 
 Enemy.prototype.update = function(dt) {
     this.x += this.u * dt;
+
+    if (this.x > 550) {
+        this.x = -100;
+        this.speed = 100 + Math.floor(Math.random() * 512);
+    }
+
+    // Check for collision between player and enemies
+    if (player.x < this.x + 60 && player.x + 37 > this.x && player.y < this.y + 25 && 30 + player.y > this.y) {
+        player.x = 200;
+        player.y = 380;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -52,13 +63,13 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyPress) {
     switch (keyPress) {
         case 'left':
-            this.x -= this.u + 30;
+            this.x -= this.u + 50;
             break;
         case 'up':
             this.y -= this.u + 30;
             break;
         case 'right':
-            this.x += this.u + 30;
+            this.x += this.u + 50;
             break;
         case 'down':
             this.y += this.u + 30;
