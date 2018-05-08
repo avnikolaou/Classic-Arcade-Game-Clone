@@ -1,4 +1,3 @@
-// Enemies our player must avoid
 let Enemy = function(x, y, u) {
     this.x = x;
     this.y = y;
@@ -6,6 +5,8 @@ let Enemy = function(x, y, u) {
     this.sprite = 'images/enemy-bug.png';
 };
 
+let score = 0;
+let attempts = 0;
 
 Enemy.prototype.update = function(dt) {
     this.x += this.u * dt;
@@ -19,6 +20,8 @@ Enemy.prototype.update = function(dt) {
     if (player.x < this.x + 60 && player.x + 37 > this.x && player.y < this.y + 25 && 30 + player.y > this.y) {
         player.x = 200;
         player.y = 380;
+        attempts += 1;
+        document.getElementsByClassName("attempts")[0].innerText = "Attempts: " + attempts;
     }
 };
 
@@ -34,7 +37,6 @@ let Player = function(x, y, u) {
     this.sprite = 'images/char-boy.png';
 };
 
-
 Player.prototype.update = function() {
     // Lock player inside the canvas
     if (this.y > 380) {
@@ -49,10 +51,15 @@ Player.prototype.update = function() {
         this.x = 0;
     }
 
-    // Check if the player reached the end
+    // Check if the player reached the end and update score;
     if (this.y < 0) {
         this.x = 200;
         this.y = 380;
+        score += 100;
+        attempts += 1;
+        document.getElementsByClassName("score")[0].innerText = "Score: " + score;
+        document.getElementsByClassName("attempts")[0].innerText = "Attempts: " + attempts;
+
     }
 };
 
@@ -60,6 +67,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//Player movement
 Player.prototype.handleInput = function(keyPress) {
     switch (keyPress) {
         case 'left':
@@ -87,8 +95,7 @@ enemyPosition.forEach(function(pos) {
     allEnemies.push(enemy);
 });
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+//Key listeners
 document.addEventListener('keyup', function(e) {
     let allowedKeys = {
         37: 'left',
